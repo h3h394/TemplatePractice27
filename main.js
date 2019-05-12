@@ -21,26 +21,30 @@ setInterval(() => {
     main();
 }, 3000)// <--- 3000 milliseconds = 3 seconds. This means run the slider() function every 3 seconds
 
+//Hide or show the menu links dependent on the browser width
 $(window).resize(function () {
-    if ($(window).width() > 883) {
+    if ($(window).outerWidth() >= 900) {
         $(".list").css("display", "flex")
     } else {
         $(".list").css("display", "none")
     }
 });
 
-$("#burger").on("click", function () {
-    $(this).removeAttr('href');
+$("#burger").on("click", function (event) {
+    // When burger menu is clicked prevent the default of going to the top
+    event.preventDefault();
+    // When burger menu is clicked select list and toggle it
     $(".list").slideToggle("slow");
 });
-
+// When ancor links are clicked remove the active class
 $(".list a").on("click", function () {
     $(".list a").removeClass("active")
+    // Check if it has the active class,if it does remove it if not add it back
     if ($(this).hasClass("active")) {
         $(this).removeClass("active")
     } else {
         $(this).addClass("active")
     }
+    // If list has the display block slideUp ('close the menu')
+    if ($('.list').css('display') == 'block') $('.list').slideUp('slow');
 });
-
-
